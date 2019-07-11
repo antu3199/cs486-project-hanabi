@@ -47,8 +47,6 @@ class SimpleAgent(Agent):
       print(observation['card_knowledge'][0])
       print("===========================================================")
     
-    print ("Test: ", self.isRainbow(2))
-    
     # Check if there are any pending hints and play the card corresponding to
     # the hint.
     for card_index, hint in enumerate(observation['card_knowledge'][0]):
@@ -64,6 +62,7 @@ class SimpleAgent(Agent):
         player_hints = observation['card_knowledge'][player_offset]
         # Check if the card in the hand of the opponent is playable.
         for card, hint in zip(player_hand, player_hints):
+          print("HINT COLOR: ", hint['color'], card)
           if SimpleAgent.playable_card(card,
                                        fireworks) and hint['color'] is None:
             return {
