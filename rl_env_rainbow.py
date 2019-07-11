@@ -512,7 +512,7 @@ def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None, rain
   Raises:
     ValueError: Unknown environment name.
   """
-  rainbowVal = True if rainbow == 1 else 0
+  rainbowVal = True if rainbow == 1 else False
 
   if pyhanabi_path is not None:
     prefixes=(pyhanabi_path,)
@@ -535,7 +535,8 @@ def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None, rain
             "max_life_tokens":
                 3,
             "observation_type":
-                pyhanabi.AgentObservationType.CARD_KNOWLEDGE.value
+                pyhanabi.AgentObservationType.CARD_KNOWLEDGE.value,
+            "rainbow": rainbowVal
         })
   elif environment_name == "Hanabi-Full-Minimal":
     return HanabiEnv(
@@ -545,7 +546,8 @@ def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None, rain
             "players": num_players,
             "max_information_tokens": 8,
             "max_life_tokens": 3,
-            "observation_type": pyhanabi.AgentObservationType.MINIMAL.value
+            "observation_type": pyhanabi.AgentObservationType.MINIMAL.value,
+            "rainbow": rainbowVal
         })
   elif environment_name == "Hanabi-Small":
     return HanabiEnv(
@@ -563,7 +565,8 @@ def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None, rain
             "max_life_tokens":
                 1,
             "observation_type":
-                pyhanabi.AgentObservationType.CARD_KNOWLEDGE.value
+                pyhanabi.AgentObservationType.CARD_KNOWLEDGE.value,
+            "rainbow": rainbowVal
         })
   elif environment_name == "Hanabi-Very-Small":
     return HanabiEnv(
@@ -581,7 +584,8 @@ def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None, rain
             "max_life_tokens":
                 1,
             "observation_type":
-                pyhanabi.AgentObservationType.CARD_KNOWLEDGE.value
+                pyhanabi.AgentObservationType.CARD_KNOWLEDGE.value,
+            "rainbow": rainbowVal
         })
   else:
     raise ValueError("Unknown environment {}".format(environment_name))
