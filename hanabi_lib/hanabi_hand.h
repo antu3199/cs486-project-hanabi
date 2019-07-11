@@ -69,7 +69,13 @@ class HanabiHand {
     int Color() const { return color_.Value(); }
     // Returns true if we have no hint saying card is not the given color.
     bool ColorPlausible(int color) const { return color_.IsPlausible(color); }
-    void ApplyIsColorHint(int color) { color_.ApplyIsValueHint(color); }
+    void ApplyIsColorHint(int color) {
+      if (color_.ValueHinted() && color_.Value() != color ) {
+         color_.ApplyIsValueHint(NumColors()-1); // Set it to rainbow.
+      } else {
+         color_.ApplyIsValueHint(color);  
+      }
+    }
     void ApplyIsNotColorHint(int color) { color_.ApplyIsNotValueHint(color); }
     // Returns number of possible ranks being tracked.
     int NumRanks() const { return rank_.Range(); }
