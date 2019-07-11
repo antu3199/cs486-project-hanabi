@@ -5,14 +5,14 @@ maker_function() {
     git pull
     cmake .
     make
-    python $1 > $2
+    python $1 > $2 --players=$3 --num_episodes=$4 --agent_class=$5
     #xdg-open $2
     code $2
     
 }
 
-if [ $# -eq 2 ]; then
-  maker_function $1 $2
+if [ $# -ge 2 ]; then
+  maker_function $1 $2 $3 $4 $5
 else
   echo "cs486-maker <python.py> <output.txt>"
 fi
