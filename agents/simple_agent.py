@@ -36,10 +36,6 @@ class SimpleAgent(Agent):
       return None
 
     print("Act:")
-    if card is not None:
-      print("Card:")
-      print(card)
-    
     if observation is not None:
       print("Observation")
       print(observation)
