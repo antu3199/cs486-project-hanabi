@@ -26,7 +26,7 @@ AGENT_CLASSES = {'SimpleAgent': SimpleAgent, 'RandomAgent': RandomAgent}
 
 class Runner(object):
   """Runner class."""
-
+  
   def __init__(self, flags):
     """Initialize runner."""
     self.flags = flags
