@@ -12,20 +12,16 @@ maker_function() {
     
 }
 
-if [ $# -ge 2 ]; then
-  name=${1:-rl_env_example_rainbow.py}
-  output=${2:-test.txt}
-  players=${3:-2}
-  numEpisodes=${4:-1}
-  agentClass=${4:-SimpleAgent}
+name=${1:-rl_env_example_rainbow.py}
+output=${2:-test.txt}
+players=${3:-2}
+numEpisodes=${4:-1}
+agentClass=${4:-SimpleAgent}
 
-  echo "Name: " $name
-  echo "Output: " $output
-  echo "Players: " $players
-  echo "numEpisodes: " $numEpisodes
-  echo "agentClass: " $agentClass
+echo "Name: " $name
+echo "Output: " $output
+echo "Players: " $players
+echo "numEpisodes: " $numEpisodes
+echo "agentClass: " $agentClass
 
-  maker_function $name $output $players $numEpisodes $agentClass
-else
-  echo "cs486-maker <python.py> <output.txt>"
-fi
+maker_function $name $output $players $numEpisodes $agentClass
