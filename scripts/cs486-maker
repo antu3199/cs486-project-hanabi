@@ -5,7 +5,7 @@ maker_function() {
     git pull
     cmake .
     make
-    echo "Command : " python $1 -players=$3 --num_episodes=$4 --agent_class=$5
+    echo "Command : " python $1 -players=$3 --num_episodes=$4 --agent_class=$5 ">" $2
     python $1 --players=$3 --num_episodes=$4 --agent_class=$5 > $2
     #xdg-open $2
     code $2
