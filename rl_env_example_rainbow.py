@@ -30,10 +30,8 @@ class Runner(object):
   def __init__(self, flags):
     """Initialize runner."""
     self.flags = flags
-    self.agent_config = {'players': flags['players']}
     self.environment = rl_env_rainbow.make('Hanabi-Full', num_players=flags['players'], rainbow=flags['rainbow'])
-    print("Environment config:")
-    print(self.environment.config)
+    self.agent_config = environment.config
     self.agent_class = AGENT_CLASSES[flags['agent_class']]
 
   def run(self):
