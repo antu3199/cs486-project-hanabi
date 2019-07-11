@@ -35,6 +35,12 @@ class SimpleAgent(Agent):
     if observation['current_player_offset'] != 0:
       return None
 
+    print("Act:")
+    print("Card:")
+    print(card)
+    print("Observation")
+    print(observation)
+
     # Check if there are any pending hints and play the card corresponding to
     # the hint.
     for card_index, hint in enumerate(observation['card_knowledge'][0]):
