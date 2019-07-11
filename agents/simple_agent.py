@@ -38,7 +38,7 @@ class SimpleAgent(Agent):
     print("Act:")
     if observation is not None:
       print("OBSERVATION ================================================")
-      print(observation)
+      print(observation['card_knowledge'][0])
       print("===========================================================")
 
     # Check if there are any pending hints and play the card corresponding to
