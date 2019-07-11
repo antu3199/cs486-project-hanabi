@@ -498,7 +498,7 @@ class HanabiEnv(Environment):
     return move
 
 
-def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None):
+def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None, rainbow=0):
   """Make an environment.
 
   Args:
@@ -512,6 +512,7 @@ def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None):
   Raises:
     ValueError: Unknown environment name.
   """
+  rainbowVal = True if rainbow == 1 else 0
 
   if pyhanabi_path is not None:
     prefixes=(pyhanabi_path,)
@@ -520,6 +521,7 @@ def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None):
 
   if (environment_name == "Hanabi-Full" or
       environment_name == "Hanabi-Full-CardKnowledge"):
+      # TODO: Change me to add rainbow.
     return HanabiEnv(
         config={
             "colors":
