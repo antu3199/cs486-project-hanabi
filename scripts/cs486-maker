@@ -17,7 +17,7 @@ if [ $# -ge 2 ]; then
   players=${3:-2}
   numEpisodes=${4:-1}
   agentClass=${4:-SimpleAgent}
-  echo $players
+  echo "Players: " $players
   maker_function $name $output $players $numEpisodes $agentClass
 else
   echo "cs486-maker <python.py> <output.txt>"
