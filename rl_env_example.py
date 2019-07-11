@@ -32,6 +32,7 @@ class Runner(object):
     self.flags = flags
     self.agent_config = {'players': flags['players']}
     self.environment = rl_env.make('Hanabi-Full', num_players=flags['players'])
+    print("Environment config:")
     print(self.environment.config)
     self.agent_class = AGENT_CLASSES[flags['agent_class']]
 
