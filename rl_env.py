@@ -106,6 +106,7 @@ class HanabiEnv(Environment):
     self.observation_encoder = pyhanabi.ObservationEncoder(
         self.game, pyhanabi.ObservationEncoderType.CANONICAL)
     self.players = self.game.num_players()
+    self.config = config
 
   def reset(self):
     r"""Resets the environment for a new game.
