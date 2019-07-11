@@ -13,7 +13,7 @@ maker_function() {
 
 if [ $# -ge 2 ]; then
   name=${1:-rl_env_example_rainbow.py}
-  output=${1:-test.txt}
+  output=${2:-test.txt}
   players=${3:-2}
   numEpisodes=${4:-1}
   agentClass=${4:-SimpleAgent}
