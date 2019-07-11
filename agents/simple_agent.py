@@ -36,10 +36,13 @@ class SimpleAgent(Agent):
       return None
 
     print("Act:")
-    print("Card:")
-    print(card)
-    print("Observation")
-    print(observation)
+    if card is not None:
+      print("Card:")
+      print(card)
+    
+    if observation is not None:
+      print("Observation")
+      print(observation)
 
     # Check if there are any pending hints and play the card corresponding to
     # the hint.
