@@ -101,7 +101,7 @@ class HanabiEnv(Environment):
           - random_start_player: bool, Random start player.
     """
     assert isinstance(config, dict), "Expected config to be of type dict."
-    print("INIT GAME")
+    print("Game Parameters:")
     print(config)
     self.game = pyhanabi.HanabiGame(config)
 
