@@ -53,6 +53,7 @@ HanabiGame::HanabiGame(
   }
   rng_.seed(seed_);
   hasRainbowCards = ParameterValue<bool>(params_, "rainbow", false);
+  std::cout << "START GAME" << std::endl;
 
   if (hasRainbowCards) {
     num_colors_++;
