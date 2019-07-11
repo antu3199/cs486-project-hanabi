@@ -492,6 +492,8 @@ class HanabiEnv(Environment):
       raise ValueError("Unknown action_type: {}".format(action_type))
 
     legal_moves = self.state.legal_moves()
+    print("Show ya moves")
+    print(move)
     assert (str(move) in map(
         str,
         legal_moves)), "Illegal action: {}. Move should be one of : {}".format(
