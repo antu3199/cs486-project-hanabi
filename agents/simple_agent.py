@@ -25,6 +25,9 @@ class SimpleAgent(Agent):
     # Extract max info tokens or set default to 8.
     self.max_information_tokens = config.get('information_tokens', 8)
 
+  def isRainbow(self, card):
+    return card == self.config['colors'] - 1
+
   @staticmethod
   def playable_card(card, fireworks):
     """A card is playable if it can be placed on the fireworks pile."""
@@ -43,7 +46,9 @@ class SimpleAgent(Agent):
       print("OBSERVATION ================================================")
       print(observation['card_knowledge'][0])
       print("===========================================================")
-
+    
+    print ("Test: ", self.isRainbow(2))
+    
     # Check if there are any pending hints and play the card corresponding to
     # the hint.
     for card_index, hint in enumerate(observation['card_knowledge'][0]):
