@@ -17,7 +17,7 @@ output=${2:-test.txt}
 players=${3:-2}
 numEpisodes=${4:-1}
 agentClass=${5:-SimpleAgent}
-rainbow=${6:-1}
+rainbow=${6:-0}
 
 echo "Name: " $name
 echo "Output: " $output
