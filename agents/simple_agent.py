@@ -26,7 +26,7 @@ class SimpleAgent(Agent):
     self.max_information_tokens = config.get('information_tokens', 8)
 
   def isRainbow(self, card):
-    return card == self.config['colors'] - 1
+    return card['color'] == 'A'
 
   @staticmethod
   def playable_card(card, fireworks):
@@ -62,7 +62,7 @@ class SimpleAgent(Agent):
         player_hints = observation['card_knowledge'][player_offset]
         # Check if the card in the hand of the opponent is playable.
         for card, hint in zip(player_hand, player_hints):
-          print("HINT COLOR: ", hint['color'], card)
+          print("HINT COLOR: ", hint, card)
           if SimpleAgent.playable_card(card,
                                        fireworks) and hint['color'] is None:
             return {
