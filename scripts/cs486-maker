@@ -5,14 +5,25 @@ maker_function() {
     git pull
     cmake .
     make
-    python $1 > $2
+    echo "Command : " python $1 --players=$3 --num_episodes=$4 --agent_class=$5 --rainbow=$6 ">" $2
+    python $1 --players=$3 --num_episodes=$4 --agent_class=$5 --rainbow=$6 > $2
     #xdg-open $2
     code $2
     
 }
 
-if [ $# -eq 2 ]; then
-  maker_function $1 $2
-else
-  echo "cs486-maker <python.py> <output.txt>"
-fi
+name=${1:-rl_env_example.py}
+output=${2:-test.txt}
+players=${3:-2}
+numEpisodes=${4:-1}
+agentClass=${5:-SimpleAgent}
+rainbow=${6:-0}
+
+echo "Name: " $name
+echo "Output: " $output
+echo "Players: " $players
+echo "numEpisodes: " $numEpisodes
+echo "agentClass: " $agentClass
+echo "rainbow: " $rainbow
+
+maker_function $name $output $players $numEpisodes $agentClass $rainbow

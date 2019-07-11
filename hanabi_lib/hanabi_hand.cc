@@ -35,6 +35,11 @@ void HanabiHand::ValueKnowledge::ApplyIsValueHint(int value) {
   value_plausible_[value] = true;
 }
 
+void HanabiHand::ValueKnowledge::ApplyIsValueHintTrustMe(int value) {
+  value_ = value;
+  value_plausible_[value] = true;
+}
+
 void HanabiHand::ValueKnowledge::ApplyIsNotValueHint(int value) {
   assert(value >= 0 && value < value_plausible_.size());
   assert(value_ < 0 || value_ != value);
@@ -97,7 +102,7 @@ uint8_t HanabiHand::RevealColor(const int color) {
   uint8_t mask = 0;
   assert(cards_.size() <= 8);  // More than 8 cards is currently not supported.
   for (int i = 0; i < cards_.size(); ++i) {
-    if (cards_[i].Color() == color) {
+    if (cards_[i].Color() == color || cards_[i].IsRainbow()) {
       if (!card_knowledge_[i].ColorHinted()) {
         mask |= static_cast<uint8_t>(1) << i;
       }

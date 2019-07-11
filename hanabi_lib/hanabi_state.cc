@@ -19,6 +19,7 @@
 #include <numeric>
 
 #include "util.h"
+#include <iostream>
 
 namespace hanabi_learning_env {
 
@@ -29,7 +30,7 @@ uint8_t HandColorBitmask(const HanabiHand& hand, int color) {
   const auto& cards = hand.Cards();
   assert(cards.size() <= 8);  // More than 8 cards is not supported.
   for (int i = 0; i < cards.size(); ++i) {
-    if (cards[i].Color() == color) {
+    if (cards[i].Color() == color || cards[i].IsRainbow()) {
       mask |= static_cast<uint8_t>(1) << i;
     }
   }
@@ -204,6 +205,11 @@ bool HanabiState::MoveIsLegal(HanabiMove move) const {
       break;
     case HanabiMove::kRevealColor: {
       if (!HintingIsLegal(move)) {
+        return false;
+      }
+
+      if (move.Color() == ParentGame()->NumColors() - 1) {
+        // Tried to reveal rainbow card LUL
         return false;
       }
       const auto& cards = HandByOffset(move.TargetOffset()).Cards();
