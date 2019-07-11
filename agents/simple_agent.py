@@ -35,6 +35,9 @@ class SimpleAgent(Agent):
     if observation['current_player_offset'] != 0:
       return None
 
+    print ("Config:")
+    print(self.config)
+
     print("Act:")
     if observation is not None:
       print("OBSERVATION ================================================")
