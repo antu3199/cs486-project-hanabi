@@ -68,7 +68,8 @@ if __name__ == "__main__":
   options, arguments = getopt.getopt(sys.argv[1:], '',
                                      ['players=',
                                       'num_episodes=',
-                                      'agent_class='])
+                                      'agent_class=',
+                                      'rainbow='])
   if arguments:
     sys.exit('usage: rl_env_example_rainbow.py [options]\n'
              '--players       number of players in the game.\n'
