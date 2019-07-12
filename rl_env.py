@@ -357,6 +357,8 @@ class HanabiEnv(Environment):
     # Apply the action to the state.
     self.state.apply_move(action)
 
+    print("Remaining cards left: ", self.state.deck_size())
+
     while self.state.cur_player() == pyhanabi.CHANCE_PLAYER_ID:
       self.state.deal_random_card()
 
