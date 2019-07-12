@@ -73,7 +73,9 @@ class HanabiHand {
     // Returns true if we have no hint saying card is not the given color.
     bool ColorPlausible(int color) const { return color_.IsPlausible(color); }
     void ApplyIsColorHint(int color) {
-      if (color_.ValueHinted() && color_.Value() != color ) {
+      if (color_.ValueHinted() && color_.Value() == NumColors() - 1) {
+        // Card is already rainbow. Nothing else to do here.
+      } else if (color_.ValueHinted() && color_.Value() != color ) {
          std::cout << "RAINBOW color applied" << std::endl; 
          color_.ApplyIsValueHintTrustMe(NumColors()-1); // Set it to rainbow.
       } else {
