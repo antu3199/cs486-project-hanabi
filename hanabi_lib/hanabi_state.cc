@@ -205,7 +205,7 @@ bool HanabiState::MoveIsLegal(HanabiMove move) const {
         return false;
       }
 
-      if (move.Color() == ParentGame()->NumColors() - 1) {
+      if (HanabiGame::hasRainbow && move.Color() == HanabiGame::rainbowColor) {
         // Tried to reveal rainbow card LUL
         return false;
       }
