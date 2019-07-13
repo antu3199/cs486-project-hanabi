@@ -21,6 +21,8 @@
 
 #include "hanabi_card.h"
 #include <iostream>
+#include "hanabi_game.h"
+
 
 namespace hanabi_learning_env {
 
@@ -73,11 +75,10 @@ class HanabiHand {
     // Returns true if we have no hint saying card is not the given color.
     bool ColorPlausible(int color) const { return color_.IsPlausible(color); }
     void ApplyIsColorHint(int color) {
-      if (color_.ValueHinted() && color_.Value() == NumColors() - 1) {
+      if (HanabiGame::hasRainbow  &&  color_.ValueHinted() && color_.Value() == HanabiGame::rainbowColor) {
         // Card is already rainbow. Nothing else to do here.
       } else if (color_.ValueHinted() && color_.Value() != color ) {
-         std::cout << "RAINBOW color applied" << std::endl; 
-         color_.ApplyIsValueHintTrustMe(NumColors()-1); // Set it to rainbow.
+         color_.ApplyIsValueHintTrustMe(HanabiGame::rainbowColor); // Set it to rainbow.
       } else {
          color_.ApplyIsValueHint(color);  
       }

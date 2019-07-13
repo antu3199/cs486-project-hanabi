@@ -55,8 +55,7 @@ HanabiState::HanabiDeck::HanabiDeck(const HanabiGame& game)
     : card_count_(game.NumColors() * game.NumRanks(), 0),
       total_count_(0),
       num_ranks_(game.NumRanks()),
-      numColors(game.NumColors()),
-      hasRainbowCards(game.HasRainbowCards()) {
+      numColors(game.NumColors()) {
   for (int color = 0; color < game.NumColors(); ++color) {
     for (int rank = 0; rank < game.NumRanks(); ++rank) {
       auto count = game.NumberCardInstances(color, rank);
@@ -78,9 +77,8 @@ HanabiCard HanabiState::HanabiDeck::DealCard(std::mt19937* rng) {
   --total_count_;
   int cardColor = IndexToColor(index);
   bool isRainbowCard = false;
-  if (this->hasRainbowCards) {
-    int rainbowIndex = this->numColors - 1;
-    isRainbowCard = cardColor == rainbowIndex;
+  if (HanabiGame::hasRainbow) {
+    isRainbowCard = cardColor == HanabiGame::rainbowColor;
   }
 
   return HanabiCard(cardColor, IndexToRank(index), isRainbowCard);
@@ -96,9 +94,8 @@ HanabiCard HanabiState::HanabiDeck::DealCard(int color, int rank) {
   --total_count_;
   int cardColor = IndexToColor(index);
   bool isRainbowCard = false;
-  if (this->hasRainbowCards) {
-    int rainbowIndex = this->numColors - 1;
-    isRainbowCard = cardColor == rainbowIndex;
+  if (HanabiGame::hasRainbow) {
+    isRainbowCard = cardColor == HanabiGame::rainbowColor;
   }
 
   return HanabiCard(cardColor, IndexToRank(index), isRainbowCard);

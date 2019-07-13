@@ -18,6 +18,7 @@
 #include <cassert>
 
 #include "util.h"
+#include <iostream>
 
 namespace hanabi_learning_env {
 
@@ -33,9 +34,13 @@ void HanabiHand::ValueKnowledge::ApplyIsValueHint(int value) {
   value_ = value;
   std::fill(value_plausible_.begin(), value_plausible_.end(), false);
   value_plausible_[value] = true;
+  if (HanabiGame::hasRainbow) {
+    value_plausible_[HanabiGame::rainbowColor] = true;
+  }
 }
 
 void HanabiHand::ValueKnowledge::ApplyIsValueHintTrustMe(int value) {
+  std::fill(value_plausible_.begin(), value_plausible_.end(), false);
   value_ = value;
   value_plausible_[value] = true;
 }
