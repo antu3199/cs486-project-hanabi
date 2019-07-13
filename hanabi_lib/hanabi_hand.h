@@ -21,6 +21,8 @@
 
 #include "hanabi_card.h"
 #include <iostream>
+#include "hanabi_game.h"
+
 
 namespace hanabi_learning_env {
 
@@ -73,11 +75,10 @@ class HanabiHand {
     // Returns true if we have no hint saying card is not the given color.
     bool ColorPlausible(int color) const { return color_.IsPlausible(color); }
     void ApplyIsColorHint(int color) {
-      if (color_.ValueHinted() && color_.Value() == NumColors() - 1) {
+      if (HanabiGame::hasRainbow  &&  color_.ValueHinted() && color_.Value() == HanabiGame::rainbowColor) {
         // Card is already rainbow. Nothing else to do here.
       } else if (color_.ValueHinted() && color_.Value() != color ) {
-         std::cout << "RAINBOW color applied" << std::endl; 
-         color_.ApplyIsValueHintTrustMe(NumColors()-1); // Set it to rainbow.
+         color_.ApplyIsValueHintTrustMe(HanabiGame::rainbowColor); // Set it to rainbow.
       } else {
          color_.ApplyIsValueHint(color);  
       }
@@ -106,7 +107,7 @@ class HanabiHand {
       : cards_(hand.cards_), card_knowledge_(hand.card_knowledge_) {}
   // Copy hand. Hide cards (set to invalid) if hide_cards is true.
   // Hide card knowledge (set to unknown) if hide_knowledge is true.
-  HanabiHand(const HanabiHand& hand, bool hide_cards, bool hide_knowledge, bool hasRainbow);
+  HanabiHand(const HanabiHand& hand, bool hide_cards, bool hide_knowledge);
   // Cards and corresponding card knowledge are always arranged from oldest to
   // newest, with the oldest card or knowledge at index 0.
   const std::vector<HanabiCard>& Cards() const { return cards_; }
