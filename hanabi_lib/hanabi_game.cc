@@ -56,6 +56,7 @@ HanabiGame::HanabiGame(
   if (hasRainbowCards) {
     num_colors_++;
     std::cout << "RAINBOW CARDS ACTIVATED" << std::endl;
+    HanabiGame::hasRainbowCards = true;
   }
 
   // Work out number of cards per color, and check deck size is large enough.

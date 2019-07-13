@@ -106,7 +106,7 @@ class HanabiHand {
       : cards_(hand.cards_), card_knowledge_(hand.card_knowledge_) {}
   // Copy hand. Hide cards (set to invalid) if hide_cards is true.
   // Hide card knowledge (set to unknown) if hide_knowledge is true.
-  HanabiHand(const HanabiHand& hand, bool hide_cards, bool hide_knowledge);
+  HanabiHand(const HanabiHand& hand, bool hide_cards, bool hide_knowledge, bool hasRainbow);
   // Cards and corresponding card knowledge are always arranged from oldest to
   // newest, with the oldest card or knowledge at index 0.
   const std::vector<HanabiCard>& Cards() const { return cards_; }
