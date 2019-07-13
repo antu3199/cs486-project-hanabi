@@ -422,6 +422,8 @@ class HanabiEnv(Environment):
         card.to_dict() for card in observation.discard_pile()
     ]
 
+    obs_dict["all_hands"] = self.state.player_hands()
+
     # Return hints received.
     obs_dict["card_knowledge"] = []
     for player_hints in observation.card_knowledge():

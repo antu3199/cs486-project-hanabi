@@ -38,6 +38,18 @@ class SecondAgent(Agent):
             return None
 
         fireworks = observation['fireworks']
+        print ("STATE ============================================")
+        print("Fireworks")
+        print(fireworks)
+        print("Player hands:")
+        print(observation['all_hands'])
+        print ("Card knowledge:")
+        for player_offset in range(0, observation['num_players']):
+            knowledge = observation['card_knowledge'][player_offset]
+            print("Player", player_offset, "hints:")
+            print(knowledge)
+
+        print ("==================================================")
 
         # Check if there are any pending hints and play the card corresponding to
         # the hint.
@@ -51,6 +63,7 @@ class SecondAgent(Agent):
             for player_offset in range(1, observation['num_players']):
                 player_hand = observation['observed_hands'][player_offset]
                 player_hints = observation['card_knowledge'][player_offset]
+
                 # Check if the card in the hand of the opponent is playable.
                 for card, hint in zip(player_hand, player_hints):
                     if self.playable_card(card,
