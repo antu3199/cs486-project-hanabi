@@ -101,11 +101,14 @@ class HanabiEnv(Environment):
           - random_start_player: bool, Random start player.
     """
     assert isinstance(config, dict), "Expected config to be of type dict."
+    print("Game Parameters:")
+    print(config)
     self.game = pyhanabi.HanabiGame(config)
 
     self.observation_encoder = pyhanabi.ObservationEncoder(
         self.game, pyhanabi.ObservationEncoderType.CANONICAL)
     self.players = self.game.num_players()
+    self.config = config
 
   def reset(self):
     r"""Resets the environment for a new game.
@@ -354,6 +357,8 @@ class HanabiEnv(Environment):
     # Apply the action to the state.
     self.state.apply_move(action)
 
+    print("Remaining cards left: ", self.state.deck_size())
+
     while self.state.cur_player() == pyhanabi.CHANCE_PLAYER_ID:
       self.state.deal_random_card()
 
@@ -416,6 +421,8 @@ class HanabiEnv(Environment):
     obs_dict["discard_pile"] = [
         card.to_dict() for card in observation.discard_pile()
     ]
+
+    obs_dict["all_hands"] = self.state.player_hands()
 
     # Return hints received.
     obs_dict["card_knowledge"] = []
@@ -490,6 +497,8 @@ class HanabiEnv(Environment):
       raise ValueError("Unknown action_type: {}".format(action_type))
 
     legal_moves = self.state.legal_moves()
+    print("Inputted move")
+    print(move)
     assert (str(move) in map(
         str,
         legal_moves)), "Illegal action: {}. Move should be one of : {}".format(
@@ -498,7 +507,7 @@ class HanabiEnv(Environment):
     return move
 
 
-def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None):
+def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None, rainbow=0):
   """Make an environment.
 
   Args:
@@ -512,6 +521,7 @@ def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None):
   Raises:
     ValueError: Unknown environment name.
   """
+  rainbowVal = True if rainbow == 1 else False
 
   if pyhanabi_path is not None:
     prefixes=(pyhanabi_path,)
@@ -520,6 +530,7 @@ def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None):
 
   if (environment_name == "Hanabi-Full" or
       environment_name == "Hanabi-Full-CardKnowledge"):
+      # TODO: Change me to add rainbow.
     return HanabiEnv(
         config={
             "colors":
@@ -533,7 +544,8 @@ def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None):
             "max_life_tokens":
                 3,
             "observation_type":
-                pyhanabi.AgentObservationType.CARD_KNOWLEDGE.value
+                pyhanabi.AgentObservationType.CARD_KNOWLEDGE.value,
+            "rainbow": rainbowVal
         })
   elif environment_name == "Hanabi-Full-Minimal":
     return HanabiEnv(
@@ -543,7 +555,8 @@ def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None):
             "players": num_players,
             "max_information_tokens": 8,
             "max_life_tokens": 3,
-            "observation_type": pyhanabi.AgentObservationType.MINIMAL.value
+            "observation_type": pyhanabi.AgentObservationType.MINIMAL.value,
+            "rainbow": rainbowVal
         })
   elif environment_name == "Hanabi-Small":
     return HanabiEnv(
@@ -561,7 +574,8 @@ def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None):
             "max_life_tokens":
                 1,
             "observation_type":
-                pyhanabi.AgentObservationType.CARD_KNOWLEDGE.value
+                pyhanabi.AgentObservationType.CARD_KNOWLEDGE.value,
+            "rainbow": rainbowVal
         })
   elif environment_name == "Hanabi-Very-Small":
     return HanabiEnv(
@@ -579,7 +593,8 @@ def make(environment_name="Hanabi-Full", num_players=2, pyhanabi_path=None):
             "max_life_tokens":
                 1,
             "observation_type":
-                pyhanabi.AgentObservationType.CARD_KNOWLEDGE.value
+                pyhanabi.AgentObservationType.CARD_KNOWLEDGE.value,
+            "rainbow": rainbowVal
         })
   else:
     raise ValueError("Unknown environment {}".format(environment_name))

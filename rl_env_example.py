@@ -20,8 +20,9 @@ import getopt
 import rl_env
 from agents.random_agent import RandomAgent
 from agents.simple_agent import SimpleAgent
+from agents.second_agent import SecondAgent
 
-AGENT_CLASSES = {'SimpleAgent': SimpleAgent, 'RandomAgent': RandomAgent}
+AGENT_CLASSES = {'SimpleAgent': SimpleAgent, 'RandomAgent': RandomAgent, 'SecondAgent': SecondAgent}
 
 
 class Runner(object):
@@ -30,8 +31,8 @@ class Runner(object):
   def __init__(self, flags):
     """Initialize runner."""
     self.flags = flags
-    self.agent_config = {'players': flags['players']}
-    self.environment = rl_env.make('Hanabi-Full', num_players=flags['players'])
+    self.environment = rl_env.make('Hanabi-Full', num_players=flags['players'], rainbow=flags['rainbow'])
+    self.agent_config = self.environment.config
     self.agent_class = AGENT_CLASSES[flags['agent_class']]
 
   def run(self):
@@ -64,11 +65,12 @@ class Runner(object):
     return rewards
 
 if __name__ == "__main__":
-  flags = {'players': 2, 'num_episodes': 1, 'agent_class': 'SimpleAgent'}
+  flags = {'players': 2, 'num_episodes': 1, 'agent_class': 'SimpleAgent', 'rainbow': 0}
   options, arguments = getopt.getopt(sys.argv[1:], '',
                                      ['players=',
                                       'num_episodes=',
-                                      'agent_class='])
+                                      'agent_class=',
+                                      'rainbow='])
   if arguments:
     sys.exit('usage: rl_env_example.py [options]\n'
              '--players       number of players in the game.\n'

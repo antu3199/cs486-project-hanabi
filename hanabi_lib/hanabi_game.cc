@@ -20,8 +20,12 @@
 
 
 namespace hanabi_learning_env {
+bool HanabiGame::hasRainbow;
+int HanabiGame::rainbowColor;
 
 namespace {
+
+
 // Constants.
 const int kDefaultPlayers = 2;
 const int kInformationTokens = 8;
@@ -52,11 +56,15 @@ HanabiGame::HanabiGame(
     seed_ = std::random_device()();
   }
   rng_.seed(seed_);
-  hasRainbowCards = ParameterValue<bool>(params_, "rainbow", false);
-
+  bool hasRainbowCards = ParameterValue<bool>(params_, "rainbow", false);
   if (hasRainbowCards) {
     num_colors_++;
     std::cout << "RAINBOW CARDS ACTIVATED" << std::endl;
+    HanabiGame::rainbowColor = num_colors_ - 1;
+    HanabiGame::hasRainbow = true;
+  } else {
+    HanabiGame::hasRainbow = false;
+    HanabiGame::rainbowColor = -1;
   }
 
   // Work out number of cards per color, and check deck size is large enough.
@@ -133,7 +141,7 @@ std::unordered_map<std::string, std::string> HanabiGame::Parameters() const {
           {"seed", std::to_string(seed_)},
           {"random_start_player", random_start_player_ ? "true" : "false"},
           {"observation_type", std::to_string(observation_type_)},
-          {"has_rainbow_cards", std::to_string(hasRainbowCards)}
+          {"has_rainbow_cards", std::to_string(HanabiGame::hasRainbow)}
           };
 }
 

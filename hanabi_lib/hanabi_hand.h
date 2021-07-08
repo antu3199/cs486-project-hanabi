@@ -20,6 +20,9 @@
 #include <vector>
 
 #include "hanabi_card.h"
+#include <iostream>
+#include "hanabi_game.h"
+
 
 namespace hanabi_learning_env {
 
@@ -47,6 +50,8 @@ class HanabiHand {
     bool IsPlausible(int value) const { return value_plausible_[value]; }
     // Record a hint that gives the value of the variable.
     void ApplyIsValueHint(int value);
+
+    void ApplyIsValueHintTrustMe(int value);
     // Record a hint that the variable does not have the given value.
     void ApplyIsNotValueHint(int value);
 
@@ -69,7 +74,15 @@ class HanabiHand {
     int Color() const { return color_.Value(); }
     // Returns true if we have no hint saying card is not the given color.
     bool ColorPlausible(int color) const { return color_.IsPlausible(color); }
-    void ApplyIsColorHint(int color) { color_.ApplyIsValueHint(color); }
+    void ApplyIsColorHint(int color) {
+      if (HanabiGame::hasRainbow  &&  color_.ValueHinted() && color_.Value() == HanabiGame::rainbowColor) {
+        // Card is already rainbow. Nothing else to do here.
+      } else if (color_.ValueHinted() && color_.Value() != color ) {
+         color_.ApplyIsValueHintTrustMe(HanabiGame::rainbowColor); // Set it to rainbow.
+      } else {
+         color_.ApplyIsValueHint(color);  
+      }
+    }
     void ApplyIsNotColorHint(int color) { color_.ApplyIsNotValueHint(color); }
     // Returns number of possible ranks being tracked.
     int NumRanks() const { return rank_.Range(); }

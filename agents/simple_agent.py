@@ -14,7 +14,10 @@
 """Simple Agent."""
 
 from rl_env import Agent
+from random import randint
 
+# Note: probably won't work if don't use standard set.
+COLOR_CHAR = ["R", "Y", "G", "W", "B", "A"]  # consistent with hanabi_lib/util.cc
 
 class SimpleAgent(Agent):
   """Agent that applies a simple heuristic."""
@@ -25,6 +28,9 @@ class SimpleAgent(Agent):
     # Extract max info tokens or set default to 8.
     self.max_information_tokens = config.get('information_tokens', 8)
 
+  def isRainbow(self, card):
+    return card['color'] == 'A'
+
   @staticmethod
   def playable_card(card, fireworks):
     """A card is playable if it can be placed on the fireworks pile."""
@@ -34,13 +40,25 @@ class SimpleAgent(Agent):
     """Act based on an observation."""
     if observation['current_player_offset'] != 0:
       return None
+   
+    '''
+    print ("Config:")
+    print(self.config)
+   
+    print("Act:")
+    if observation is not None:
+      print("OBSERVATION ================================================")
+      print(observation)
+      print("===========================================================")
+    '''
+ 
 
     # Check if there are any pending hints and play the card corresponding to
     # the hint.
-    for card_index, hint in enumerate(observation['card_knowledge'][0]):
-      if hint['color'] is not None or hint['rank'] is not None:
-        return {'action_type': 'PLAY', 'card_index': card_index}
-
+    #for card_index, hint in enumerate(observation['card_knowledge'][0]):
+    #  if hint['color'] is not None or hint['rank'] is not None:
+    #    return {'action_type': 'PLAY', 'card_index': card_index}
+    
     # Check if it's possible to hint a card to your colleagues.
     fireworks = observation['fireworks']
     if observation['information_tokens'] > 0:
@@ -48,15 +66,22 @@ class SimpleAgent(Agent):
       for player_offset in range(1, observation['num_players']):
         player_hand = observation['observed_hands'][player_offset]
         player_hints = observation['card_knowledge'][player_offset]
+        cardIndex = 0
         # Check if the card in the hand of the opponent is playable.
         for card, hint in zip(player_hand, player_hints):
-          if SimpleAgent.playable_card(card,
-                                       fireworks) and hint['color'] is None:
-            return {
-                'action_type': 'REVEAL_COLOR',
-                'color': card['color'],
-                'target_offset': player_offset
-            }
+          print("Player", player_offset, "Card:", cardIndex, " Hint knowledge: ", hint)
+          cardIndex += 1
+          if self.isRainbow(card):
+          #if SimpleAgent.playable_card(card, fireworks) and ( hint['color'] is None or (not card['color'] == hint['color'])):
+              revealColor = card['color']
+              if (self.isRainbow(card)):
+                revealColor = COLOR_CHAR[randint(0, len(COLOR_CHAR) - 2)]
+              
+              return {
+                  'action_type': 'REVEAL_COLOR',
+                  'color': revealColor,
+                  'target_offset': player_offset
+              }
 
     # If no card is hintable then discard or play.
     if observation['information_tokens'] < self.max_information_tokens:

@@ -57,7 +57,6 @@ class HanabiState {
     int total_count_ = -1;  // Total number of cards available to be dealt out.
     int num_ranks_ = -1;    // From game.NumRanks(), used to map card to index.
     int numColors = -1;
-    bool hasRainbowCards = false;
   };
 
   enum EndOfGameType {

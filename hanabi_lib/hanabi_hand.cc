@@ -18,6 +18,7 @@
 #include <cassert>
 
 #include "util.h"
+#include <iostream>
 
 namespace hanabi_learning_env {
 
@@ -32,6 +33,15 @@ void HanabiHand::ValueKnowledge::ApplyIsValueHint(int value) {
   assert(value_plausible_[value] == true);
   value_ = value;
   std::fill(value_plausible_.begin(), value_plausible_.end(), false);
+  value_plausible_[value] = true;
+  if (HanabiGame::hasRainbow) {
+    value_plausible_[HanabiGame::rainbowColor] = true;
+  }
+}
+
+void HanabiHand::ValueKnowledge::ApplyIsValueHintTrustMe(int value) {
+  std::fill(value_plausible_.begin(), value_plausible_.end(), false);
+  value_ = value;
   value_plausible_[value] = true;
 }
 
@@ -97,7 +107,7 @@ uint8_t HanabiHand::RevealColor(const int color) {
   uint8_t mask = 0;
   assert(cards_.size() <= 8);  // More than 8 cards is currently not supported.
   for (int i = 0; i < cards_.size(); ++i) {
-    if (cards_[i].Color() == color) {
+    if (cards_[i].Color() == color || cards_[i].IsRainbow()) {
       if (!card_knowledge_[i].ColorHinted()) {
         mask |= static_cast<uint8_t>(1) << i;
       }
